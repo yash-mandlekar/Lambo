@@ -38,15 +38,18 @@ var swipe = document.querySelectorAll("#swipe");
 
 swipe.forEach(function (elem) {
   var spans = elem.querySelectorAll("span");
-
+  var animating = false;
   var index = 0;
   document.querySelector(".main").addEventListener("click", (e) => {
+    if (animating) return;
+    animating = true;
     gsap.to(spans[index], {
       top: "-=100%",
       ease: Expo.easeInOut,
       duration: 1,
       onComplete: function () {
         gsap.set(this._targets[0], { top: "100%" });
+        animating = false;
       },
     });
     index == spans.length - 1 ? (index = 0) : index++;
